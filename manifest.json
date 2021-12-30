@@ -2,5 +2,19 @@
     "name": "Hand Pointer",
     "description": "A chrome extension to render laser-like pointer and allow users to annotate by using hand gestures",
     "version": "0.0.1",
-    "manifest_version": 3
+    "manifest_version": 3,
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "permissions": [
+      "activeTab"
+    ],
+    "content_scripts": [
+      {
+        "matches": ["https://*/*"],
+        "css": ["style.css"],
+        "js": ["content-script.js"]
+      }
+    ],
+    "options_page": "options.html"
   }
