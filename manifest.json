@@ -4,16 +4,22 @@
     "version": "0.0.1",
     "manifest_version": 3,
     "action": {
-      "default_popup": "popup.html"
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "assets/icon.png",
+        "32": "assets/icon.png",
+        "48": "assets/icon.png",
+        "128": "assets/icon.png"
+      }
     },
     "permissions": [
-      "activeTab"
+      "activeTab",
+      "scripting"
     ],
     "content_scripts": [
       {
         "matches": ["https://*/*"],
-        "css": ["style.css"],
-        "js": ["content-script.js"]
+        "css": ["styles/content-style.css"]
       }
     ],
     "options_page": "options.html"

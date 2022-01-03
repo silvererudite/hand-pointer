@@ -2,7 +2,7 @@
   "name": "hand-pointer",
   "version": "1.0.0",
   "description": "A chrome extension to render laser-like pointer and allow users to annotate by using hand gestures",
-  "main": "annotate.js",
+  "main": "init.js",
   "dependencies": {
     "acorn": "^8.7.0",
     "acorn-jsx": "^5.3.2",
