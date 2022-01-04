@@ -1,11 +1,11 @@
-#canvas {
-  position: fixed; 
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+.tfhp-canvas {
   background-color: transparent; 
-  pointer-events:none;
-  z-index: 2; 
+  bottom: 0;
   display: block;
+  left: 0;
+  position: fixed;
+  pointer-events:none;
+  right: 0;
+  top: 0;
+  z-index: 2; 
 }

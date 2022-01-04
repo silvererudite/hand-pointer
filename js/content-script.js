@@ -1,8 +1,13 @@
-document.body.innerHTML += '<canvas id="canvas"></canvas>';
-const canvas = document.getElementById('canvas');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-const ctx = canvas.getContext('2d');
+const BLANK_CANVAS = document.createElement('canvas');
+BLANK_CANVAS.className = 'tfhp-canvas';
+BLANK_CANVAS.id = 'canvas';
+
+document.body.appendChild(BLANK_CANVAS);
+
+const CANVAS = document.getElementById('canvas');
+CANVAS.width = window.innerWidth;
+CANVAS.height = window.innerHeight;
+const CONTEXT = CANVAS.getContext('2d');
 // let angle = 0;
 
 /**
@@ -10,13 +15,13 @@ const ctx = canvas.getContext('2d');
  * @param  {number} beginY
  */
 function drawCircle(beginX, beginY) {
-  ctx.beginPath();
+  CONTEXT.beginPath();
   // const radius = 15 + 20 * Math.abs(Math.cos(angle));
-  ctx.arc(beginX, beginY, 15, 0, 2 * Math.PI, false);
-  ctx.closePath();
-  ctx.strokeStyle = 'red';
-  ctx.lineWidth = 3;
-  ctx.stroke();
+  CONTEXT.arc(beginX, beginY, 15, 0, 2 * Math.PI, false);
+  CONTEXT.closePath();
+  CONTEXT.strokeStyle = 'red';
+  CONTEXT.lineWidth = 3;
+  CONTEXT.stroke();
 
 //   angle += Math.PI / 220;
 //   requestAnimationFrame(drawCircle);
@@ -24,18 +29,22 @@ function drawCircle(beginX, beginY) {
 
 
 drawCircle(20, 20);
-drawCircle(canvas.width-40, 20);
-drawCircle(20, canvas.height-20);
-drawCircle(canvas.width-40, canvas.height-20);
+drawCircle(CANVAS.width-40, 20);
+drawCircle(20, CANVAS.height-20);
+drawCircle(CANVAS.width-40, CANVAS.height-20);
 
+// rerender drawings when browser window is resized
+window.addEventListener('resize', rerenderOnWindowResize );
 
-window.onresize = function() {
-  canvas.width = window.innerWidth;
-  canvas.style.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  canvas.style.height = window.innerHeight;
+/**
+ */
+function rerenderOnWindowResize() {
+  CANVAS.width = window.innerWidth;
+  CANVAS.style.width = window.innerWidth;
+  CANVAS.height = window.innerHeight;
+  CANVAS.style.height = window.innerHeight;
   drawCircle(20, 20);
-  drawCircle(canvas.width-40, 20);
-  drawCircle(20, canvas.height-20);
-  drawCircle(canvas.width-40, canvas.height-20);
-};
+  drawCircle(CANVAS.width-40, 20);
+  drawCircle(20, CANVAS.height-20);
+  drawCircle(CANVAS.width-40, CANVAS.height-20);
+}

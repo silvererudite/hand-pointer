@@ -1,10 +1,13 @@
-const btn = document.getElementById('prepare-canvas');
+const TOGGLE_ON = document.getElementById('prepare-canvas');
 
-btn.addEventListener('click', async () => {
-  const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
+// asynchronously get current active tab and set by a destructing assignment,
+// then we inject content-script on that particular tab
+
+TOGGLE_ON.addEventListener('click', async () => {
+  const [TAB] = await chrome.tabs.query({active: true, currentWindow: true});
 
   chrome.scripting.executeScript({
-    target: {tabId: tab.id},
+    target: {tabId: TAB.id},
     files: ['js/content-script.js'],
   });
 });
