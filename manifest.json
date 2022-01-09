@@ -22,5 +22,8 @@
         "css": ["styles/content-style.css"]
       }
     ],
-    "options_page": "options.html"
+    "options_page": "options.html",
+    "background": {
+      "service_worker": "js/background.js"
+    }
   }

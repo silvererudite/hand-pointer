@@ -8,9 +8,32 @@
         <title>Options</title>
     </head>
     <body>
-        <button id="enable-disable" class="toggleBtn">
-            Customize laser-pointer
-        </button>
-        <button id="enable-disable" class="toggleBtn">Customize colors</button>
+        <div class="tfJsHp-options-wrapper">
+           <div class="tfJsHp-left-col">
+                Customize pointer
+           </div>
+        
+           <div class="tfJsHp-right-col">
+            Change pointer color
+            <br>
+            <br>
+            <input type="color" name="tfJsHp-color" id="tfJsHp-pointer-color">
+            <br>
+            <br>
+            Change pointer thickness
+            <br>
+            <br>
+            <input type="number" name="tfJsHp-p-size" id="tfJsHp-pointer-thickness">
+            <br>
+            <br>
+            Disable pointer trail 
+            <input type="checkbox" name="tfJsHp-disable-trail" id="tfJsHp-trail">
+            <br>
+            <br>
+            <br>
+            <button>Recalibrate pointer</button>
+           </div>
+
+        </div>
     </body>
 </html>

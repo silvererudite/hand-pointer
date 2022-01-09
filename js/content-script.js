@@ -1,10 +1,12 @@
+
 const BLANK_CANVAS = document.createElement('canvas');
-BLANK_CANVAS.className = 'tfhp-canvas';
+
+BLANK_CANVAS.className = 'tfJsHp-canvas';
 BLANK_CANVAS.id = 'canvas';
-
 document.body.appendChild(BLANK_CANVAS);
-
 const CANVAS = document.getElementById('canvas');
+
+
 CANVAS.width = window.innerWidth;
 CANVAS.height = window.innerHeight;
 const CONTEXT = CANVAS.getContext('2d');
@@ -23,8 +25,8 @@ function drawCircle(beginX, beginY) {
   CONTEXT.lineWidth = 3;
   CONTEXT.stroke();
 
-//   angle += Math.PI / 220;
-//   requestAnimationFrame(drawCircle);
+  //   angle += Math.PI / 220;
+  //   requestAnimationFrame(drawCircle);
 }
 
 
@@ -48,3 +50,12 @@ function rerenderOnWindowResize() {
   drawCircle(20, CANVAS.height-20);
   drawCircle(CANVAS.width-40, CANVAS.height-20);
 }
+
+chrome.runtime.onMessage.addListener(
+    function(request) {
+      if (request.onToggle) {
+        CANVAS.remove();
+      }
+    },
+);
+
