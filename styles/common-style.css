@@ -82,12 +82,21 @@ body {
 }
 
 .tfJsHp-calibration-steps {
+    align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+   
 }
 
 .tfJs-ui-step {
     padding: 1em;
+}
+
+.tfJsHp-popup-actions {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+ 
 }
