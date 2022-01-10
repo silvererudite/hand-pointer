@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles/common-style.css">
-  <title>Calibrate pointer</title>
-</head>
-<body>
-  <div id="liveView" class="videoView">
-    <button id="webcamButton">Enable Webcam</button>
-    <video id="webcam" autoplay></video>
-  </div>
-  <div class="tfJsHp-calibration-steps">
-    <div class="tfJs-ui-step">
-    <button class="tfJsHp-calibration-step1">1. Point at the top left corner</button>
-  </div>
-  <div class="tfJs-ui-step">
-    <button disabled="disabled" class="tfJsHp-calibration-step2">2. Point at the top right corner</button>
-  </div>
-  <div class="tfJs-ui-step">
-    <button disabled="disabled" class="tfJsHp-calibration-step3">3. Point at the bottom left corner</button>
-  </div>
-  <div class="tfJs-ui-step">
-    <button disabled="disabled" class="tfJsHp-calibration-step4">3. Point at the bottom right corner</button>
-  </div>
-  </div>
-  *Use your index finger to point at a corner, shown by the red circle
-  <script src="js/calibration.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="styles/common-style.css" />
+        <title>Calibrate pointer</title>
+    </head>
+    <body>
+        <div id="liveView" class="videoView">
+            <video id="webcam" autoplay></video>
+        </div>
+        <div class="tfJsHp-calibration-steps">
+            <div class="tfJs-ui-step">
+                <button class="tfJsHp-calibration-step1">
+                    1. Point at the top left corner
+                </button>
+            </div>
+            <div class="tfJs-ui-step">
+                <button disabled="disabled" class="tfJsHp-calibration-step2">
+                    2. Point at the top right corner
+                </button>
+            </div>
+            <div class="tfJs-ui-step">
+                <button disabled="disabled" class="tfJsHp-calibration-step3">
+                    3. Point at the bottom left corner
+                </button>
+            </div>
+            <div class="tfJs-ui-step">
+                <button disabled="disabled" class="tfJsHp-calibration-step4">
+                    3. Point at the bottom right corner
+                </button>
+            </div>
+        </div>
+        *Use your index finger to point at a corner, shown by the red circle
+        <script type="module" src="js/calibration.js"></script>
+    </body>
 </html>
