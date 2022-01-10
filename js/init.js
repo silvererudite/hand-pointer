@@ -1,6 +1,8 @@
 const TOGGLE_BTN = document.querySelector('.container-toggle');
 const TOGGLE_TARGET = document.querySelector('.target-toggle');
 const CALIBRATE = document.querySelector('.tfJsHp-calibrate-btn');
+const OPEN_INSTRUCTIONS = document.querySelector('.tfJsHp-inst-btn');
+const OPEN_OPTIONS = document.querySelector('.tfJsHp-options-btn');
 
 TOGGLE_BTN.addEventListener('click', function() {
   if (TOGGLE_TARGET.classList[1] === 'unEnable') {
@@ -36,4 +38,12 @@ async function removeCanvas() {
 
 CALIBRATE.addEventListener('click', ()=>{
   chrome.tabs.create({url: chrome.runtime.getURL('calibrate.html')});
+});
+
+OPEN_INSTRUCTIONS.addEventListener('click', ()=>{
+  chrome.tabs.create({url: chrome.runtime.getURL('instructions.html')});
+});
+
+OPEN_OPTIONS.addEventListener('click', ()=>{
+  chrome.tabs.create({url: chrome.runtime.getURL('options.html')});
 });
