@@ -1,84 +1,93 @@
 html,
 body {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    font-family: "Roboto Mono", monospace;
-    justify-content: center;
-    margin: 0;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-family: "Roboto Mono", monospace;
+  justify-content: center;
+  margin: 0;
 }
 
 .popup {
-    background: #ffe66d;
-    color: black;
-    height: 300px;
-    width: 300px;
+  background: #ffe66d;
+  color: black;
+  height: 300px;
+  width: 300px;
 }
 
 .container-toggle {
-    background-color: #fff;
-    border-radius: 50px;
-    cursor: pointer;
-    height: 40px;
-    margin: 0 auto;
-    /* position: absolute; */
-    transform: translate(-50%, -50%);
-    width: 100px;
+  background-color: #fff;
+  border-radius: 50px;
+  cursor: pointer;
+  height: 40px;
+  margin: 0 auto;
+  /* position: absolute; */
+  transform: translate(-50%, -50%);
+  width: 100px;
 }
 
 .target-toggle {
-    border-radius: 100%;
-    height: 50px;
-    position: absolute;
-    top: -5px;
-    transition: 0.5s;
-    width: 50px;
+  border-radius: 100%;
+  height: 50px;
+  position: absolute;
+  top: -5px;
+  transition: 0.5s;
+  width: 50px;
 }
 
 .unEnable {
-    background-color: #5d32ec;
-    left: -5px;
+  background-color: #5d32ec;
+  left: -5px;
 }
 
 .enable {
-    background-color: #8b8c89;
-    right: -5px;
+  background-color: #8b8c89;
+  right: -5px;
 }
 
 .tfJsHp-links {
-    font-size: 18px;
+  font-size: 18px;
 }
 .tfJs-steps-wrapper {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1em;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1em;
 }
 
 .tfJs-step {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    font-size: 18px;
-    justify-content: center;
-    max-width: 400px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  justify-content: center;
+  max-width: 400px;
 }
 
 .tfJsHp-options-wrapper {
-    align-items: center;
-    display: grid;
-    font-size: 20px;
-    gap: 2em;
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: 50vh;
-    justify-items: center; 
-    margin: auto;
-    max-width: 700px;
-
+  align-items: center;
+  display: grid;
+  font-size: 20px;
+  gap: 2em;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 50vh;
+  justify-items: center;
+  margin: auto;
+  max-width: 700px;
 }
 
 .tfJsHp-right-col {
-    background: #ffe66d;
-    height: fit-content;
-    padding: 1em;
+  background: #ffe66d;
+  height: fit-content;
+  padding: 1em;
 }
 
+.tfJsHp-calibration-steps {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tfJs-ui-step {
+    padding: 1em;
+}
