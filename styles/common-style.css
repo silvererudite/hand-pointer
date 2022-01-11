@@ -49,8 +49,9 @@ body {
 }
 .tfJs-steps-wrapper {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 1em;
+  margin-top: 4em;
 }
 
 .tfJs-step {
