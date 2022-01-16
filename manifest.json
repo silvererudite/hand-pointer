@@ -14,8 +14,7 @@
     },
     "permissions": [
       "activeTab",
-      "scripting",
-      "storage"
+      "scripting"
     ],
     "content_scripts": [
       {
@@ -24,4 +23,5 @@
       }
     ],
     "options_page": "options.html"
+
   }

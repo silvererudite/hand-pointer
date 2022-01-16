@@ -1,24 +1,44 @@
-import * as handPoseDetection from '/@tensorflow-models/hand-pose-detection';
-// Register WebGL backend.
-import '/@tensorflow/tfjs-backend-webgl';
-
 (function() {
-  const BLANK_CANVAS = document.createElement('canvas');
-  const STEP_1 = document.querySelector('.tfJsHp-calibration-step1');
-  const STEP_2 = document.querySelector('.tfJsHp-calibration-step2');
-  const STEP_3 = document.querySelector('.tfJsHp-calibration-step3');
-  const STEP_4 = document.querySelector('.tfJsHp-calibration-step4');
+  // /**
+  //  * @param  {string} source
+  //  */
+  // function addScript(source) {
+  //   const SCRIPT_TAG = document.createElement('script');
+  //   SCRIPT_TAG.setAttribute('src', source);
+  //   SCRIPT_TAG.onload= function() {
+  //     console.log('loaded');
+  //   };
+  //   document.head.appendChild = SCRIPT_TAG;
+  // }
+  // addScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core');
+  // addScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter');
+  // addScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl');
+  // addScript('https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection');
 
-  BLANK_CANVAS.className = 'tfJsHp-canvas';
-  BLANK_CANVAS.id = 'canvas';
-  document.body.appendChild(BLANK_CANVAS);
-  const CANVAS = document.getElementById('canvas');
+  document.head.innerHTML += `
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+  
+ 
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
+  `;
+
+
+  const CANVAS = document.createElement('canvas');
+  const STEP_1 = document.getElementById('tfJsHp-calibration-step1');
+  const STEP_2 = document.getElementById('tfJsHp-calibration-step2');
+  const STEP_3 = document.getElementById('tfJsHp-calibration-step3');
+  const STEP_4 = document.getElementById('tfJsHp-calibration-step4');
+
+  CANVAS.setAttribute('class', 'tfJsHp-canvas');
+  document.body.appendChild(CANVAS);
 
 
   CANVAS.width = window.innerWidth;
   CANVAS.height = window.innerHeight;
   const CONTEXT = CANVAS.getContext('2d');
-  // let angle = 0;
 
   /**
  * @param  {number} beginX

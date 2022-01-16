@@ -1,8 +1,8 @@
-const TOGGLE_BTN = document.querySelector('.container-toggle');
-const TOGGLE_TARGET = document.querySelector('.target-toggle');
-const CALIBRATE = document.querySelector('.tfJsHp-calibrate-btn');
-const OPEN_INSTRUCTIONS = document.querySelector('.tfJsHp-inst-btn');
-const OPEN_OPTIONS = document.querySelector('.tfJsHp-options-btn');
+const TOGGLE_BTN = document.getElementById('tfJsHp-insert-canvas');
+const TOGGLE_TARGET = document.getElementById('tfJsHp-target-toggle');
+const CALIBRATE = document.getElementById('tfJsHp-calibrate-btn');
+const OPEN_INSTRUCTIONS = document.getElementById('tfJsHp-inst-btn');
+const OPEN_OPTIONS = document.getElementById('tfJsHp-options-btn');
 
 TOGGLE_BTN.addEventListener('click', function() {
   if (TOGGLE_TARGET.classList[1] === 'unEnable') {
@@ -17,6 +17,9 @@ TOGGLE_BTN.addEventListener('click', function() {
   }
 });
 
+
+// get the current active tab set by ES6 destructuring assignment
+// and inject the canvas
 /**
  */
 async function injectCanvas() {
@@ -25,9 +28,10 @@ async function injectCanvas() {
   chrome.scripting.executeScript({
     target: {tabId: TAB.id},
     files: ['js/content-script.js'],
+    // global var/object to indicate if canvas is injected
   });
 };
-
+// communicate to the content-script that user has toggled off
 /**
  */
 async function removeCanvas() {

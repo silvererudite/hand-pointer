@@ -35,23 +35,25 @@ body {
 }
 
 .unEnable {
-  background-color:  #ffe66d;
+  background-color:  #8b8c89;
   left: -5px;
 }
 
 .enable {
-  background-color: #8b8c89;
+  background-color: #ffe66d;
   right: -5px;
 }
 
 .tfJsHp-links {
   font-size: 18px;
 }
+
 .tfJs-steps-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1em;
   margin-top: 4em;
+  margin-bottom: 1em;
 }
 
 .tfJs-step {
@@ -79,6 +81,7 @@ body {
   background: lightblue;
   height: fit-content;
   padding: 1em;
+  width: 300px;
 }
 
 .tfJsHp-calibration-steps {
@@ -98,7 +101,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: start;
- 
+  margin-bottom: 2em;
 }
 
 .popup-btn, .options-btn {
@@ -122,6 +125,11 @@ body {
   padding: .5em;
   width: 300px;
 }
+
+.tfJsHp-options-input, .tfJsHp-options-text {
+  margin-bottom: 1em;
+}
+
 .videoView {
   cursor: pointer;
   float: left;
