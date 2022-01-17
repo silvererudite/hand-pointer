@@ -10,7 +10,7 @@
     </head>
     <body>
         <section id="liveView" class="videoView">
-            <video id="webcam" autoplay></video>
+            <video id="webcam" width="300" height="300" autoplay></video>
         </section>
         <section class="tfJsHp-calibration-steps">
             <button class="tfJsHp-ui-step" id="tfJsHp-calibration-step1">
@@ -18,25 +18,19 @@
             </button>
 
             <button
-                disabled="disabled"
-                class="tfJsHp-ui-step"
-                id="tfJsHp-calibration-step2"
+                disabled="disabled" class="tfJsHp-ui-step" id="tfJsHp-calibration-step2"
             >
                 2. Point at the top right corner
             </button>
 
             <button
-                disabled="disabled"
-                class="tfJsHp-ui-step"
-                id="tfJsHp-calibration-step3"
+                disabled="disabled" class="tfJsHp-ui-step" id="tfJsHp-calibration-step3"
             >
                 3. Point at the bottom left corner
             </button>
 
             <button
-                disabled="disabled"
-                class="tfJsHp-ui-step"
-                id="tfJsHp-calibration-step4"
+                disabled="disabled" class="tfJsHp-ui-step" id="tfJsHp-calibration-step4"
             >
                 4. Point at the bottom right corner
             </button>
@@ -44,6 +38,7 @@
         <p>
             *Use your index finger to point at a corner, shown by the red circle
         </p>
+        <!-- <script src="js/injectModel.js"></script> -->
         <script src="js/calibration.js"></script>
     </body>
 </html>
