@@ -1,4 +1,5 @@
-(function() {
+// eslint-disable-next-line no-var
+var injectCanvas = (function() {
   const CANVAS = document.createElement('canvas');
   CANVAS.setAttribute('class', 'tfJsHp-canvas');
   document.body.appendChild(CANVAS);
@@ -31,20 +32,26 @@
     drawCircle(20, CANVAS.height-20);
     drawCircle(CANVAS.width-40, CANVAS.height-20);
   }
-  // draw circles on all four corners
-  drawCircle(20, 20);
-  drawCircle(CANVAS.width-40, 20);
-  drawCircle(20, CANVAS.height-20);
-  drawCircle(CANVAS.width-40, CANVAS.height-20);
-
-  // rerender drawings when browser window is resized
-  window.addEventListener('resize', rerenderOnWindowResize);
-
-  chrome.runtime.onMessage.addListener(
-      function(request) {
-        if (request.onToggle) {
-          CANVAS.remove();
-        }
-      },
-  );
+  return {
+    draw: drawCircle,
+    reDraw: rerenderOnWindowResize,
+    canvas: CANVAS,
+  };
 })();
+
+// draw circles on all four corners
+injectCanvas.draw(20, 20);
+injectCanvas.draw(injectCanvas.canvas.width-40, 20);
+injectCanvas.draw(20, injectCanvas.canvas.height-20);
+injectCanvas.draw(injectCanvas.canvas.width-40, injectCanvas.canvas.height-20);
+
+// rerender drawings when browser window is resized
+window.addEventListener('resize', injectCanvas.reDraw);
+
+chrome.runtime.onMessage.addListener(
+    function(request) {
+      if (request.onToggle) {
+        injectCanvas.canvas.remove();
+      }
+    },
+);
