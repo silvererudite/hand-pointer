@@ -1,31 +1,36 @@
 (function() {
-  // /**
-  //  * @param  {string} source
-  //  */
+/**
+ * @param  {string} source
+ */
   // function addScript(source) {
   //   const SCRIPT_TAG = document.createElement('script');
   //   SCRIPT_TAG.setAttribute('src', source);
+  //   SCRIPT_TAG.type = 'text/javascript';
   //   SCRIPT_TAG.onload= function() {
   //     console.log('loaded');
   //   };
-  //   document.head.appendChild = SCRIPT_TAG;
+  //   const head = document.getElementsByTagName('head')[0];
+  //   head.append(SCRIPT_TAG);
   // }
   // addScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core');
   // addScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter');
   // addScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl');
   // addScript('https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection');
 
-  document.head.innerHTML += `
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
-  
- 
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
-  
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
-  `;
+  // document.head.innerHTML += `
+  // <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core" class="tfJs-script"></script>
+  // <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter" class="tfJs-script"></script>
 
 
+  // <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl" class="tfJs-script"></script>
+
+  // <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection" class="tfJs-script"></script>
+  // `;
+
+  // const scriptList = document.getElementsByClassName('tfJs-script');
+  // for (let i=0; i<scriptList.length; i++) {
+  //   eval(scriptList[i].outerHTML);
+  // }
   const CANVAS = document.createElement('canvas');
   const STEP_1 = document.getElementById('tfJsHp-calibration-step1');
   const STEP_2 = document.getElementById('tfJsHp-calibration-step2');
@@ -41,9 +46,9 @@
   const CONTEXT = CANVAS.getContext('2d');
 
   /**
- * @param  {number} beginX
- * @param  {number} beginY
- */
+   * @param  {number} beginX
+   * @param  {number} beginY
+   */
   function drawCircle(beginX, beginY) {
     CONTEXT.beginPath();
     CONTEXT.arc(beginX, beginY, 15, 0, 2 * Math.PI, false);
@@ -53,9 +58,9 @@
     CONTEXT.stroke();
   }
   /**
- * @param  {number} beginX
- * @param  {number} beginY
- */
+   * @param  {number} beginX
+   * @param  {number} beginY
+   */
   function removeCircle(beginX, beginY) {
     CONTEXT.beginPath();
     CONTEXT.arc(beginX, beginY, 15, 0, 2 * Math.PI, false);
@@ -89,71 +94,57 @@
   });
 })();
 
-/**
- */
-async function loadModel() {
-  const model = handPoseDetection.SupportedModels.MediaPipeHands;
+let video;
+let model;
+let detector;
+const init = async () => {
+  video = await loadVideo();
+  model = handPoseDetection.SupportedModels.MediaPipeHands;
   const detectorConfig = {
     runtime: 'tfjs',
+    modelType: 'full',
   };
-  detector = await handPoseDetection.createDetector(model, detectorConfig);
-
-
-  const video = document.getElementById('webcam');
-
-  /**
-   * @return {boolean} if user has webcam
-   */
-  function hasGetUserMedia() {
-    return !!(navigator.mediaDevices &&
-     navigator.mediaDevices.getUserMedia);
+  detector =
+   await handPoseDetection.createDetector(model, detectorConfig);
+  main();
+};
+const loadVideo = async () => {
+  const video = await setupCamera();
+  video.play();
+  return video;
+};
+const setupCamera = async () => {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    throw new Error(
+        'Browser API navigator.mediaDevices.getUserMedia not available',
+    );
   }
-
-  // If webcam supported, add event listener to button for when user
-  // wants to activate it.
-  if (hasGetUserMedia()) {
-    enableCam();
-  } else {
-    console.warn('getUserMedia() is not supported by your browser');
+  video = document.getElementById('webcam');
+  const stream = await navigator.mediaDevices.getUserMedia({
+    audio: false,
+    video: {
+      facingMode: 'user',
+      width: window.innerWidth,
+      height: window.innerHeight,
+    },
+  });
+  video.srcObject = stream;
+  return new Promise(
+      (resolve) => (video.onloadedmetadata = () => resolve(video)),
+  );
+};
+// console.log(flag);
+// flag.onload = () => {
+init();
+// };
+/**
+ */
+async function main() {
+  const predictions = await detector.estimateHands(
+      document.querySelector('video'),
+  );
+  if (predictions.length > 0) {
+    console.log(predictions[0]);
   }
-
-
-  // Enable the live webcam view and start classification.
-  /**
-   */
-  function enableCam() {
-    if (!model) {
-      console.log('Wait! Model not loaded yet.');
-      return;
-    }
-
-
-    // getUsermedia parameters.
-    const constraints = {
-      video: true,
-    };
-
-    // Activate the webcam stream.
-    navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-      video.srcObject = stream;
-      video.addEventListener('loadeddata', predictWebcam);
-    });
-  }
-
-  /**
-   */
-  function predictWebcam() {
-  // Now let's start classifying the stream.
-    detector.estimateHands(video).then(function(hands) {
-      if (hands[0].score > 0.6) {
-        console.log(keypoints3D[0]);
-      }
-
-      // Call this function again to keep predicting when the browser is ready.
-      window.requestAnimationFrame(predictWebcam);
-    });
-  }
+  requestAnimationFrame(main);
 }
-
-loadModel();
-
