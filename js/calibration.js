@@ -1,36 +1,5 @@
+/* eslint-disable max-len */
 (function() {
-/**
- * @param  {string} source
- */
-  // function addScript(source) {
-  //   const SCRIPT_TAG = document.createElement('script');
-  //   SCRIPT_TAG.setAttribute('src', source);
-  //   SCRIPT_TAG.type = 'text/javascript';
-  //   SCRIPT_TAG.onload= function() {
-  //     console.log('loaded');
-  //   };
-  //   const head = document.getElementsByTagName('head')[0];
-  //   head.append(SCRIPT_TAG);
-  // }
-  // addScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core');
-  // addScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter');
-  // addScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl');
-  // addScript('https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection');
-
-  // document.head.innerHTML += `
-  // <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core" class="tfJs-script"></script>
-  // <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter" class="tfJs-script"></script>
-
-
-  // <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl" class="tfJs-script"></script>
-
-  // <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection" class="tfJs-script"></script>
-  // `;
-
-  // const scriptList = document.getElementsByClassName('tfJs-script');
-  // for (let i=0; i<scriptList.length; i++) {
-  //   eval(scriptList[i].outerHTML);
-  // }
   const CANVAS = document.createElement('canvas');
   const STEP_1 = document.getElementById('tfJsHp-calibration-step1');
   const STEP_2 = document.getElementById('tfJsHp-calibration-step2');

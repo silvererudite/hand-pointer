@@ -16,8 +16,6 @@ TOGGLE_BTN.addEventListener('click', function() {
     removeCanvas();
   }
 });
-
-
 // get the current active tab set by ES6 destructuring assignment
 // and inject the canvas
 /**
@@ -28,7 +26,6 @@ async function injectCanvas() {
   chrome.scripting.executeScript({
     target: {tabId: TAB.id},
     files: ['js/content-script.js'],
-    // global var/object to indicate if canvas is injected
   });
 };
 // communicate to the content-script that user has toggled off
