@@ -129,11 +129,3 @@ body {
 .tfJsHp-options-input, .tfJsHp-options-text {
   margin-bottom: 1em;
 }
-
-.videoView {
-  cursor: pointer;
-  float: left;
-  margin: 2% 1%;
-  position: relative;
-  width: 48%;
-}

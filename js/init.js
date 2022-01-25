@@ -18,8 +18,6 @@ TOGGLE_BTN.addEventListener('click', function() {
 });
 // get the current active tab set by ES6 destructuring assignment
 // and inject the canvas
-/**
- */
 async function injectCanvas() {
   const [TAB] = await chrome.tabs.query({active: true,
     currentWindow: true});
@@ -29,13 +27,17 @@ async function injectCanvas() {
   });
 };
 // communicate to the content-script that user has toggled off
-/**
- */
 async function removeCanvas() {
   await chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {onToggle: true});
   });
 }
+
+// send if calibration done already and if canvas is set
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  chrome.tabs.sendMessage(tabs[0].id,
+      {isCalibrated: isCalibrated, canvasSetup: canvasSetup});
+});
 
 CALIBRATE.addEventListener('click', ()=>{
   chrome.tabs.create({url: chrome.runtime.getURL('calibrate.html')});
