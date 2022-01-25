@@ -102,7 +102,7 @@ function predict() {
         calibrate.remove(calibrate.canvas.width-40, 20);
         calibrate.draw(20, calibrate.canvas.height-20);
       });
-      handPosBotmLeft =
+      handPosBotmLeft = predictions[0].keypoints3D[8];
       STEP_3.addEventListener('click', ()=>{
         STEP_3.disabled = true;
         STEP_4.disabled = false;
