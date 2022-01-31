@@ -10,30 +10,10 @@
     </head>
     <body>
         <section id="liveView" class="videoView">
-            <video id="webcam" width="600" height="600" autoplay></video>
+            <video id="webcam" width="640" height="480" autoplay></video>
         </section>
         <section class="tfJsHp-calibration-steps">
-            <button class="tfJsHp-ui-step" id="tfJsHp-calibration-step1">
-                1. Point at the top left corner
-            </button>
-
-            <button
-                disabled="disabled" class="tfJsHp-ui-step" id="tfJsHp-calibration-step2"
-            >
-                2. Point at the top right corner
-            </button>
-
-            <button
-                disabled="disabled" class="tfJsHp-ui-step" id="tfJsHp-calibration-step3"
-            >
-                3. Point at the bottom left corner
-            </button>
-
-            <button
-                disabled="disabled" class="tfJsHp-ui-step"  id="tfJsHp-calibration-step4"
-            >
-                4. Point at the bottom right corner
-            </button>
+            <p id="banner">Point at top left</p>
         </section>
         <p>
             *Use your index finger to point at a corner, shown by the red circle
@@ -44,5 +24,6 @@
         <script src="tf/hand-pose-detection.js"></script>
         <script src="js/global-settings.js"></script>
         <script src="js/calibration.js"></script>
+        <script src="js/train-model.js"></script>
     </body>
 </html>

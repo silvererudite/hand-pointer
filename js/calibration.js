@@ -1,57 +1,10 @@
-/* eslint-disable no-var */
 let video;
 let model;
 let detector;
-var handPosTopleft;
-var handPosTopRight;
-var handPosBotmLeft;
-var handPosBotmRight;
 
-const init = async () => {
-  video = await loadVideo();
-  model = handPoseDetection.SupportedModels.MediaPipeHands;
-  const detectorConfig = {
-    runtime: 'tfjs',
-    modelType: 'full',
-  };
-  detector =
- await handPoseDetection.createDetector(model, detectorConfig);
-  predict();
-};
-const loadVideo = async () => {
-  const video = await setupCamera();
-  video.play();
-  return video;
-};
-const setupCamera = async () => {
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    throw new Error(
-        'Browser API navigator.mediaDevices.getUserMedia not available',
-    );
-  }
-  video = document.getElementById('webcam');
-  const stream = await navigator.mediaDevices.getUserMedia({
-    audio: false,
-    video: {
-      facingMode: 'user',
-      width: window.innerWidth,
-      height: window.innerHeight,
-    },
-  });
-  video.srcObject = stream;
-  return new Promise(
-      (resolve) => (video.onloadedmetadata = () => resolve(video)),
-  );
-};
-init();
-
-const STEP_1 = document.getElementById('tfJsHp-calibration-step1');
-const STEP_2 = document.getElementById('tfJsHp-calibration-step2');
-const STEP_3 = document.getElementById('tfJsHp-calibration-step3');
-const STEP_4 = document.getElementById('tfJsHp-calibration-step4');
-var calibrate = (function() {
+const prompt = document.getElementById('banner');
+let render = (function() {
   const CANVAS = document.createElement('canvas');
-
   CANVAS.setAttribute('class', 'tfJsHp-canvas');
   document.body.appendChild(CANVAS);
   CANVAS.width = window.innerWidth;
@@ -83,34 +36,197 @@ var calibrate = (function() {
   };
 })();
 
-
-function predict() {
-  detector.estimateHands(video).then(function(predictions) {
-    if (predictions.length > 0) {
-      calibrate.draw(20, 20);
-      handPosTopleft = predictions[0].keypoints3D[8];
-      STEP_1.addEventListener('click', ()=>{
-        STEP_1.disabled = true;
-        STEP_2.disabled = false;
-        calibrate.remove(20, 20);
-        calibrate.draw(calibrate.canvas.width-40, 20);
-      });
-      handPosTopRight = predictions[0].keypoints3D[8];
-      STEP_2.addEventListener('click', ()=>{
-        STEP_2.disabled = true;
-        STEP_3.disabled = false;
-        calibrate.remove(calibrate.canvas.width-40, 20);
-        calibrate.draw(20, calibrate.canvas.height-20);
-      });
-      handPosBotmLeft = predictions[0].keypoints3D[8];
-      STEP_3.addEventListener('click', ()=>{
-        STEP_3.disabled = true;
-        STEP_4.disabled = false;
-        calibrate.remove(20, calibrate.canvas.height-20);
-        calibrate.draw(calibrate.canvas.width-40, calibrate.canvas.height-20);
-      });
-      predict(handPosBotmRight);
-    }
-    window.requestAnimationFrame(predict);
+const init = async () => {
+  video = await loadVideo();
+  model = handPoseDetection.SupportedModels.MediaPipeHands;
+  const detectorConfig = {
+    runtime: 'tfjs',
+    modelType: 'full',
+  };
+  detector =
+   await handPoseDetection.createDetector(model, detectorConfig);
+  step1();
+};
+const loadVideo = async () => {
+  const video = await setupCamera();
+  video.play();
+  return video;
+};
+const setupCamera = async () => {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    throw new Error(
+        'Browser API navigator.mediaDevices.getUserMedia not available',
+    );
+  }
+  video = document.getElementById('webcam');
+  const stream = await navigator.mediaDevices.getUserMedia({
+    audio: false,
+    video: true,
   });
+  video.srcObject = stream;
+  return new Promise(
+      (resolve) => (video.onloadedmetadata = () => resolve(video)),
+  );
+};
+
+init();
+
+let tempBuffer = [];
+let count = 0;
+
+async function step1() {
+  console.log('inside step 1');
+  render.draw(20, 20);
+  const estimationConfig = {flipHorizontal: true};
+  const predictions = await detector.estimateHands(
+      document.querySelector('video'),
+      estimationConfig);
+  if (predictions.length > 0) {
+    if (count > 5 && INPUTS.length < 30) {
+      INPUTS.push(
+          [predictions[0].keypoints3D[8].x,
+            predictions[0].keypoints3D[8].y,
+            predictions[0].keypoints3D[8].z]);
+      OUTPUTS.push([20, 20]);
+    } else if (tempBuffer.length > 0) {
+      calculateChange(
+          predictions[0].keypoints3D[8].x,
+          predictions[0].keypoints3D[8].y,
+          predictions[0].keypoints3D[8].z);
+    } else {
+      tempBuffer[0] = [predictions[0].keypoints3D[8].x,
+        predictions[0].keypoints3D[8].y,
+        predictions[0].keypoints3D[8].z];
+    }
+  }
+  if (INPUTS.length < 30) {
+    requestAnimationFrame(step1);
+  } else {
+    // jump to step2
+    render.remove(20, 20);
+    // console.log(INPUTS.length);
+    count = 0;
+    tempBuffer = [];
+    prompt.innerText = 'Put finger in top right';
+    setTimeout(step2, 5000);
+  }
+}
+
+function calculateChange(x, y, z) {
+  if (
+    (Math.abs(tempBuffer[0][0]) - Math.abs(x)) < 0.01 &&
+     (Math.abs(tempBuffer[0][1]) - Math.abs(y)) < 0.01 &&
+     (Math.abs(tempBuffer[0][2]) - Math.abs(z)) < 0.01 ) {
+    count +=1;
+  }
+}
+async function step2() {
+  console.log('inside step 2');
+  render.draw(render.canvas.width-40, 20);
+  const estimationConfig = {flipHorizontal: true};
+  const predictions = await detector.estimateHands(
+      document.querySelector('video'),
+      estimationConfig);
+  if (predictions.length > 0) {
+    if (count > 5 && INPUTS.length < 60) {
+      INPUTS.push(
+          [predictions[0].keypoints3D[8].x,
+            predictions[0].keypoints3D[8].y,
+            predictions[0].keypoints3D[8].z]);
+      OUTPUTS.push([render.canvas.width-40, 20]);
+    } else if (tempBuffer.length > 0) {
+      calculateChange(
+          predictions[0].keypoints3D[8].x,
+          predictions[0].keypoints3D[8].y,
+          predictions[0].keypoints3D[8].z);
+    } else {
+      tempBuffer[0] = [
+        predictions[0].keypoints3D[8].x,
+        predictions[0].keypoints3D[8].y,
+        predictions[0].keypoints3D[8].z];
+    }
+  }
+  if (INPUTS.length < 60) {
+    requestAnimationFrame(step2);
+  } else {
+    render.remove(render.canvas.width-40, 20);
+    console.log(INPUTS.length);
+    count = 0;
+    tempBuffer = [];
+    prompt.innerText = 'Put finger in bottom left';
+    setTimeout(step3, 5000);
+  }
+}
+async function step3() {
+  console.log('inside step 3');
+  render.draw(20, render.canvas.height-20);
+  const estimationConfig = {flipHorizontal: true};
+  const predictions = await detector.estimateHands(
+      document.querySelector('video'),
+      estimationConfig);
+  if (predictions.length > 0) {
+    if (count > 5 && INPUTS.length < 90) {
+      INPUTS.push(
+          [predictions[0].keypoints3D[8].x,
+            predictions[0].keypoints3D[8].y,
+            predictions[0].keypoints3D[8].z]);
+      OUTPUTS.push([20, render.canvas.height-20]);
+    } else if (tempBuffer.length > 0) {
+      calculateChange(
+          predictions[0].keypoints3D[8].x,
+          predictions[0].keypoints3D[8].y,
+          predictions[0].keypoints3D[8].z);
+    } else {
+      tempBuffer[0] = [
+        predictions[0].keypoints3D[8].x,
+        predictions[0].keypoints3D[8].y,
+        predictions[0].keypoints3D[8].z];
+    }
+  }
+  if (INPUTS.length < 90) {
+    requestAnimationFrame(step3);
+  } else {
+    // jump to step 4
+    render.remove(20, render.canvas.height-20);
+    count = 0;
+    tempBuffer = [];
+    prompt.innerText = 'Put finger in bottom right';
+    setTimeout(step4, 5000);
+  }
+}
+async function step4() {
+  console.log('inside step 4');
+  render.draw(render.canvas.width-40, render.canvas.height-20);
+  const estimationConfig = {flipHorizontal: true};
+  const predictions = await detector.estimateHands(
+      document.querySelector('video'),
+      estimationConfig);
+  if (predictions.length > 0) {
+    if (count > 5 && INPUTS.length < 120) {
+      INPUTS.push(
+          [predictions[0].keypoints3D[8].x,
+            predictions[0].keypoints3D[8].y,
+            predictions[0].keypoints3D[8].z]);
+      OUTPUTS.push([render.canvas.width-40, render.canvas.height-20]);
+    } else if (tempBuffer.length > 0) {
+      calculateChange(
+          predictions[0].keypoints3D[8].x,
+          predictions[0].keypoints3D[8].y,
+          predictions[0].keypoints3D[8].z);
+    } else {
+      tempBuffer[0] = [
+        predictions[0].keypoints3D[8].x,
+        predictions[0].keypoints3D[8].y,
+        predictions[0].keypoints3D[8].z];
+    }
+  }
+  if (INPUTS.length < 120) {
+    requestAnimationFrame(step4);
+  } else {
+    render.remove(render.canvas.width-40, render.canvas.height-20);
+    tempBuffer = [];
+    prompt.innerText = 'Done !';
+    console.log(INPUTS);
+    console.log(OUTPUTS);
+  }
 }
