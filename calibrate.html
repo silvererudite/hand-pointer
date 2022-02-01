@@ -10,20 +10,29 @@
     </head>
     <body>
         <section id="liveView" class="videoView">
-            <video id="webcam" width="640" height="480" autoplay></video>
+            <video id="webcam" width="800" height="800" autoplay></video>
         </section>
         <section class="tfJsHp-calibration-steps">
-            <p id="banner">Point at top left</p>
+            <h2 id="banner">Point at top left</h2>
         </section>
         <p>
             *Use your index finger to point at a corner, shown by the red circle
         </p>
-        <script src="tf/tfjs-core.js"></script>
+        <!-- <script src="tf/tfjs-core.js"></script>
         <script src="tf/tfjs-converter.js"></script>
         <script src="tf/tfjs-backend-webgl.js"></script>
         <script src="tf/hand-pose-detection.js"></script>
-        <script src="js/global-settings.js"></script>
+       
+       -->
+      
+       <!-- <script src="js/global-settings.js"></script> -->
+        <script src="node_modules/@tensorflow/tfjs-core/dist/tf-core.js"></script>
+        <script src="node_modules/@tensorflow/tfjs-converter/dist/tf-converter.js"></script>
+        <script src="node_modules/@tensorflow/tfjs-backend-webgl/dist/tf-backend-webgl.js"></script>
+        <script src="node_modules/@tensorflow-models/hand-pose-detection/dist/hand-pose-detection.js"></script>
+        <script src="tf/runtime.js"></script>
+        <script src="node_modules/@tensorflow/tfjs/dist/tf.js"></script>
         <script src="js/calibration.js"></script>
-        <script src="js/train-model.js"></script>
+    
     </body>
 </html>

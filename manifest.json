@@ -21,10 +21,8 @@
         "matches": ["https://*/*"],
         "css": ["styles/content-style.css"],
         "js": [
-          "tf/tfjs-core.js",
-          "tf/tfjs-converter.js",
-          "tf/tfjs-backend-webgl.js",
-          "tf/hand-pose-detection.js"
+          
+          "js/global-settings.js"
         ]
       }
     ],

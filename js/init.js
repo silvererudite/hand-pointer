@@ -23,6 +23,26 @@ async function injectCanvas() {
     currentWindow: true});
   chrome.scripting.executeScript({
     target: {tabId: TAB.id},
+    files: ['js/global-settings.js'],
+  });
+  chrome.scripting.executeScript({
+    target: {tabId: TAB.id},
+    files: ['tf/tfjs-core.js'],
+  });
+  chrome.scripting.executeScript({
+    target: {tabId: TAB.id},
+    files: ['tf/tfjs-converter.js'],
+  });
+  chrome.scripting.executeScript({
+    target: {tabId: TAB.id},
+    files: ['tf/tfjs-backend-webgl.js'],
+  });
+  chrome.scripting.executeScript({
+    target: {tabId: TAB.id},
+    files: ['tf/hand-pose-detection.js'],
+  });
+  chrome.scripting.executeScript({
+    target: {tabId: TAB.id},
     files: ['js/content-script.js'],
   });
 };
